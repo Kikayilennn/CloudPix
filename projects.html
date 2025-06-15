@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects - CloudPix</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="projects-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <span>CloudPix</span>
+                <div class="sparkle">✨</div>
+            </div>
+            <div class="header-actions">
+                <div class="user-section" id="userSection">
+                    <button class="btn btn-primary header-auth-btn" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+                    <button class="btn btn-secondary header-auth-btn" id="registerBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Register
+                    </button>
+                </div>
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <button class="welcome-text" id="userProfileLink">
+                        <i class="fas fa-user"></i>
+                        Welcome back, <span id="userName">User</span>! 💕
+                    </button>
+                    <button class="btn btn-secondary" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="projects-container">
+            <div class="projects-header">
+                <h1>My Projects 🎨</h1>
+                <p>Manage and revisit your creative work</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="action-card" id="uploadImageBtn">
+                    <i class="fas fa-upload"></i>
+                    <h3>Upload & Edit</h3>
+                    <p>Edit an existing image</p>
+                </div>
+                <div class="action-card" id="howItWorksBtn">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>How It Works</h3>
+                    <p>Learn about CloudPix features</p>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-section">
+                <div class="section-header">
+                    <h2>Recent Projects</h2>
+                    <div class="view-options">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Projects will be loaded here dynamically -->
+                </div>
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-palette"></i>
+                    <h3>No projects yet</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Actions Modal -->
+    <div class="modal-overlay" id="projectModal" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="projectModalTitle">Project Options</h2>
+                <button class="close-btn" id="closeProjectModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="project-actions">
+                    <button class="action-option" id="openProjectBtn">
+                        <i class="fas fa-edit"></i>
+                        <span>Open & Edit</span>
+                    </button>
+                    <button class="action-option" id="duplicateProjectBtn">
+                        <i class="fas fa-copy"></i>
+                        <span>Duplicate</span>
+                    </button>
+                    <button class="action-option" id="exportProjectBtn">
+                        <i class="fas fa-download"></i>
+                        <span>Export</span>
+                    </button>
+                    <button class="action-option" id="shareProjectBtn">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Share</span>
+                    </button>
+                    <button class="action-option danger" id="deleteProjectBtn">
+                        <i class="fas fa-trash"></i>
+                        <span>Delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Register Modal (reused from main app) -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Welcome to CloudPix! 🌟</h2>
+                <button class="close-btn" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <form id="authForm">
+                    <div class="form-group">
+                        <label for="email">✉️ Email</label>
+                        <input type="email" id="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">🔒 Password</label>
+                        <input type="password" id="password" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group" id="nameGroup" style="display: none;">
+                        <label for="name">👤 Name</label>
+                        <input type="text" id="name" placeholder="Your cute name">
+                    </div>
+                    <button type="submit" class="btn btn-primary modal-submit" id="submitBtn">
+                        Login 💕
+                    </button>
+                </form>
+                <p class="switch-auth">
+                    <span id="switchText">Don't have an account?</span>
+                    <a href="#" id="switchMode">Register here! ✨</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Modal -->
+    <div class="modal-overlay" id="howItWorksModal" style="display: none;">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>How CloudPix Works 🎨</h2>
+                <button class="close-btn" id="closeHowItWorksModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="how-it-works-content">
+                    <div class="step">
+                        <h3><i class="fas fa-upload"></i> 1. Upload Your Image</h3>
+                        <p>Start by uploading any image from your device. CloudPix supports all common image formats including JPG, PNG, and more.</p>
+                    </div>
+                    <div class="step">
+                        <h3><i class="fas fa-magic"></i> 2. Apply Magical Filters</h3>
+                        <p>Choose from our collection of beautiful filters like Vintage, Pastel, Cool, Warm, and many more to transform your photos instantly.</p>
+                    </div>
+                    <div class="step">
+                        <h3><i class="fas fa-sliders-h"></i> 3. Adjust Settings</h3>
+                        <p>Fine-tune your image with brightness, contrast, saturation, and blur controls to get the perfect look.</p>
+                    </div>
+                    <div class="step">
+                        <h3><i class="fas fa-crop"></i> 4. Crop & Resize</h3>
+                        <p>Use our smart cropping tool with presets like 1:1 square, 4:3, 16:9, or create custom crops for any purpose.</p>
+                    </div>
+                    <div class="step">
+                        <h3><i class="fas fa-images"></i> 5. Use Templates</h3>
+                        <p>Jump-start your creativity with pre-designed templates for social media, business cards, presentations, and more.</p>
+                    </div>
+                    <div class="step">
+                        <h3><i class="fas fa-download"></i> 6. Save & Export</h3>
+                        <p>Once you're happy with your creation, export it in high quality and save it to your projects for future editing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+    <script src="projects.js"></script>
+</body>
+</html>
